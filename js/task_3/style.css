@@ -1,0 +1,6 @@
+.plus {
+    list-style-type: "+ "
+}
+.notPlus li {
+    list-style-type: disc
+}

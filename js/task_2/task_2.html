@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- 
+            * - любая последовательность
+            - - любое число
+            то|другое - или то или другое
+         -->
+
+        <link href="./style.css" rel="stylesheet" type="text/css">
+
+    </head>
+    <body>
+        <table>
+            
+            <tr>
+                <td class="anot"><span>Password*</span></td>
+                <td class="input"><input id="pwd" required="1" template="*"></input></td>
+            </tr>
+            <tr>
+                <td class="anot"><span>email</span></td>
+                <td class="input"><input id="mail" required="0" template="*@mail.ru"></input></td>
+            </tr>
+            <tr>
+                <td class="anot"><span>phone</span></td>
+                <td class="input"><input id="phone" required="0" template="+7----------|8----------"></input></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button>ПРОВЕРИТЬ</button></td>
+            </tr>
+        </table>
+
+
+    </body>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+    function checkLetter(letter, template_Letter)
+    {
+        if (template_Letter == "*") {
+            return true;
+        } else if (template_Letter == "-" & 0 <= letter & letter <= 9) {
+            return true;
+        } else if (template_Letter == letter) {
+            return true;
+        }
+        return false;
+    }
+
+    function checkTemplate(value, template) {
+        var res = false;
+        if (value.length == 0 & template.length > 0) {
+            return res;
+        }
+        if (value.length == 1 & template.length == 1 & checkLetter(value[0], template[0])) {
+            return true;
+        }
+        if (checkLetter(value[0], template[0])) {
+            value = value.substring(1, value.length);
+            var template2 = template.substring(1, template.length);
+            if (template[0] == "*") {
+                var t1 = checkTemplate(value, template),
+                t2 = checkTemplate(value, template2);
+                res = t1 | t2;
+            } else {
+                res = checkTemplate(value, template2);
+            }
+        }
+        return res;
+    }
+
+    function checkTemplateMain(value, template, required = 1)
+    {
+        var res = false;
+        if (required & value.length == 0) {
+            return res;
+        }
+        temps = template.split("|");
+        temps.forEach(temp => {
+            if (checkTemplate(value, temp)){
+                res = true;
+            }
+        });
+        return res;
+    }
+    $("button").on("click", () => {
+        $("input").each((index, inp) =>
+        {
+            val = $(inp).val();
+            temp = $(inp).attr("template");
+            req = $(inp).attr("required");
+            if (!checkTemplateMain(val, temp, req)){
+                console.log("Ошибка")
+                $(inp).addClass("error");
+            } else
+            {
+                $(inp).addClass("success");
+            }
+        })
+    });
+</script>
+</html>

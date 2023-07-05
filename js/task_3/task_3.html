@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="./style.css" rel="stylesheet" type="text/css">
+    </head>
+<body>
+
+<h2>A Nested List</h2>
+<p>Lists can be nested (list inside list):</p>
+
+<ul class="main-list">
+  <li>Coffee</li>
+  <li>Tea
+    <ul>
+      <li>Black tea
+        <ul>
+            <li>Black tea 2</li>
+            <li>Green tea 2</li>
+          </ul>
+      </li>
+      <li>Green tea</li>
+    </ul>
+  </li>
+  <li>Milk</li>
+</ul>
+
+</body>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+    function func (jUl_elem)
+    {
+        $lis = jUl_elem.children("li");
+
+        $lis.each((index, li) => {
+            console.log($(li).children("ul"));
+            if ($(li).children("ul").length !== 0)
+            {
+                $(li).addClass("plus");
+                func($(li).children("ul"));
+                return;
+            }        
+        });
+    };
+    func($(".main-list"));
+
+</script>
+</html>

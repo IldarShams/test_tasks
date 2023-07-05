@@ -1,0 +1,42 @@
+.cards {
+    /* margin: 0px; */
+    max-width: 100%;
+    display: grid;
+  }
+
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    .cards { 
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .cards div:nth-child(2n+1) p {
+        border: 2px solid black;
+        float: left;
+    }
+    .cards div:nth-child(2n+2) p {
+        border: 2px solid red;
+        float: right;
+    }
+
+  }
+
+  @media screen and (min-width: 1024px) {
+    .cards { 
+        grid-template-columns: repeat(3, 1fr); 
+    }
+    .cards div:nth-child(3n +1) p {
+        border: 2px solid black;
+        float: left;
+    }
+    .cards div:nth-child(3n +2) p {
+        border: 2px solid red;
+        float: center;
+    }
+    .cards div:nth-child(3n +3) p {
+        border: 2px solid green;
+        float: right;
+    }
+  }
+  .card {
+    margin: 5px;
+    border: 1px solid black;
+  }
